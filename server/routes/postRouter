@@ -1,0 +1,54 @@
+const express = require("express")
+const router = express.Router()
+const fs = require("fs")
+
+// returns all blog posts
+
+router.get("/", async (req, res) => {
+
+    const posts = fs.readdirSync("./posts")
+
+    const tbr = posts.map(x => x.replace(".md", ""))
+
+    res.json(tbr)
+})
+
+router.get("/:postId", async (req, res) => {
+    const postId = req.params["postId"]
+
+    await fs.readFile(`./posts/${postId}.md`, "utf-8", (err, data) => {
+        if(err) {
+            console.error(err)
+            res.json({"message": "unable to find the post"})
+        }
+
+        res.json({"content": data})
+    })
+})
+
+
+router.post("/", async (req, res) => {
+    const content = req.body.content
+    const title = req.body.title
+
+    if(!content || !title) {
+        return res.json({"error": "Incomplete or missing data"})
+    }
+
+    const filename = title + ".md"
+
+    await fs.writeFile(`./posts/${filename}`, "this is sparta", (err) => {
+        if(err) {
+            console.error(err)
+        }
+        else {
+            console.log("created")
+        }
+    })
+
+    return res.json({"message": `post created id ${filename}`})
+})
+
+
+
+module.exports = router
