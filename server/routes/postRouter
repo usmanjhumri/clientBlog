@@ -37,7 +37,7 @@ router.post("/", async (req, res) => {
 
     const filename = title + ".md"
 
-    await fs.writeFile(`./posts/${filename}`, "this is sparta", (err) => {
+    await fs.writeFile(`./posts/${filename}`, content, (err) => {
         if(err) {
             console.error(err)
         }
