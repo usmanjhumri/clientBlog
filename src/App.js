@@ -14,6 +14,7 @@ import Report from "./Pages/Report";
 import Contact from "./components/Contact";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
+import DashBoard from "./Pages/Dashboard";
 function App() {
   return (
     <div className="App">
@@ -32,6 +33,8 @@ function App() {
           <Route path="/report" element={<Report />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/articles" element={<Article />} />
+          {/* Dashboard route */}
+          <Route path="/dashboard" element={<DashBoard/>} />
         </Routes>
         <Footer />
       </main>
